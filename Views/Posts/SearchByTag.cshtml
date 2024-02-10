@@ -1,0 +1,39 @@
+﻿@model IEnumerable<BlogProject.Models.BlogPostModel>
+
+<div class="container mt-5 w-50">
+    @if (Model.Count() > 0)
+    {
+        <h2 class="mb-4">Filter by tags!</h2>
+        <form asp-action="SearchByTag" method="get" class="mb-4">
+            <div class="form-group">
+                <select asp-for="@Model.First().Tag" asp-items="@(new SelectList(ViewBag.Tags))" class="form-control mb-1 w-25"></select>
+                <span asp-validation-for="@Model.First().Tag" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+        <hr />
+    }
+    else
+    {
+        <h2>No posts added yet.</h2>
+    }
+
+    <div class="text-center">
+        @foreach (var item in Model)
+        {
+            <div class="post-container">
+                <div class="author">
+                    <h5>Author: @Html.DisplayFor(modelItem => item.Author.Nickname)</h5>
+                    <span class="post-id">@Html.DisplayFor(modelItem => item.CreatedAt)</span>
+                </div>
+                <div class="post-content">
+                    <h3>@Html.DisplayFor(modelItem => item.Title)</h3>
+                    <span>@Html.DisplayFor(modelItem => item.Content)</span>
+                    <hr />
+                    <h6>Tag: @Html.DisplayFor(modelItem => item.Tag)</h6>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
